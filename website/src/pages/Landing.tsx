@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
+import Button from '../components/ui/Button'
 
 export default function Landing() {
   const { isDark, toggleDark } = useTheme()
@@ -47,8 +48,15 @@ export default function Landing() {
           </span>
 
           <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-            <NavLink to="/project" label="Project" />
-            <NavLink to="/join" label="Join" />
+            <Link to="/project">
+              <Button variant="ghost" size="sm">Project</Button>
+            </Link>
+            <Link to="/login">
+              <Button variant="ghost" size="sm">Log in</Button>
+            </Link>
+            <Link to="/join">
+              <Button variant={isDark ? 'secondary' : 'primary'} size="sm">Join</Button>
+            </Link>
             <DarkToggle isDark={isDark} onToggle={toggleDark} />
           </div>
         </nav>
@@ -122,29 +130,6 @@ export default function Landing() {
 }
 
 // ── Sub-components ────────────────────────────────────────────────────────────
-
-function NavLink({ to, label }: { to: string; label: string }) {
-  const [hovered, setHovered] = useState(false)
-
-  return (
-    <Link
-      to={to}
-      style={{
-        fontSize: '0.68rem',
-        letterSpacing: '0.16em',
-        textTransform: 'uppercase',
-        color: hovered ? 'var(--color-text)' : 'var(--color-muted)',
-        fontFamily: "'DM Sans', sans-serif",
-        fontWeight: '400',
-        transition: 'color 0.2s ease',
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {label}
-    </Link>
-  )
-}
 
 function DarkToggle({ isDark, onToggle }: { isDark: boolean; onToggle: () => void }) {
   const [hovered, setHovered] = useState(false)
